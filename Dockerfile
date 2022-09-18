@@ -57,7 +57,18 @@ RUN execlineb -c ' \
 FROM base
 
 COPY --from=download /tmp/downloads/overlay-rootfs /
+COPY ./overlay-rootfs /
 
 ENV PATH="/command:$PATH"
+
+RUN apk add --no-cache patch
+RUN execlineb -c ' \
+		forbacktickx -o 0 -E patch { find / -name "*.patch" } \
+		backtick -E destination { heredoc 0 ${patch} sed "s/.patch//" } \
+		foreground { patch --verbose ${destination} ${patch} } \
+		importas -iu ? ? \
+		foreground { rm -fv ${patch} } \
+		exit ${?} \
+	'
 
 CMD /init

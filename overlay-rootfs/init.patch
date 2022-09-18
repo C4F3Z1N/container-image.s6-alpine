@@ -1,0 +1,10 @@
+--- a/init
++++ b/init
+@@ -24,6 +24,7 @@
+   PATH=/bin
+ fi
+
++addpath /sbin
+ addpath /bin
+ addpath /usr/bin
+ addpath /command
