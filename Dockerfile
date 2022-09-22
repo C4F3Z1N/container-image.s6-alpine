@@ -71,4 +71,4 @@ RUN execlineb -c ' \
 		exit ${?} \
 	'
 
-CMD /init
+CMD ["/init"]
